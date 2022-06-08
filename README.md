@@ -261,7 +261,7 @@ yolov5모델에서 [Kitti+vkitti데이터셋](preparing_dataset/yolov5/vkitti_ki
 
   <img src="./imgs/occluded_instance_amount.png" width="500" height="400">
 
-[val_result folder](https://github.com/Phot0Synthesis/sim2real/tree/main/val_result)
+[**val_result folder**](https://github.com/Phot0Synthesis/sim2real/tree/main/val_result)
 
 ### kitti + vkitti + cycleGAN mAP@0.5 result
 |occlusion amount|baseline|ours(cycleGAN)|
