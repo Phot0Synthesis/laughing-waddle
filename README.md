@@ -318,7 +318,7 @@ yolov5모델에서 [Kitti+vkitti데이터셋](preparing_dataset/yolov5/vkitti_ki
  - 가려진 객체(car,van,truck)의 개수가 '0-5', '0-10', '0-전체'인 데이터셋으로 분리하여 검증했습니다.
  - '0-5', '0-10', '0-전체'는 가려진 객체의 비율(1:1:1)로 나누어 결정하였습니다.
 
-  <img src="./imgs/occluded_instance_amount.png" width="500" height="400">
+  <img src="./imgs/occluded_instance_amount.png" width="500" height="350">
 
 [**val_result folder**](https://github.com/Phot0Synthesis/sim2real/tree/main/val_result)
 
