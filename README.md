@@ -69,10 +69,8 @@
 ![image/Untitled%201.png](./imgs/vkitti_bdd100k.png)
 
 ### □ Structure
-```
-한웅's flow chart img
-```
 
+- ![한웅's flow chart img](./imgs/flow_chart.png)
 - 사용 모델 : yolov5, cycleGAN, neural style transfer
 - 모델 평가 및 지표 : occluded dataset, mAP@0.5
 
@@ -134,25 +132,82 @@ yolov5모델에서 [Kitti+vkitti데이터셋](preparing_dataset/yolov5/vkitti_ki
 
 >기존 vkitti의 다양한 환경에서의 데이터셋이 현실 세계에서의 특징을 제대로 반영하지 못하여 학습 성능이 떨어진다고 판단하여, cycleGAN과 neural style transfer와 같은 모델을 사용하여 현실 세계의 특성을 합성 데이터셋에 적용시킬 수 있다면 보다 더 나은 학습 결과를 기대할 수 있을 것
 
+<br>
+
 ### □ data augmentation
+ - Cycle GAN과 Neural Style Transfer 모델을 사용하여 data augmentation에 필요한 이미지들을 생성하였습니다.<br>
+ 
+ 　　　[**Cycle Gan**](preparing_dataset/cycleGAN/cycleGAN_generator/cycleGAN_result_out.ipynb)<div>
+  <div markdown="1">
 
-#### [Cycle Gan](preparing_dataset/cycleGAN/cycleGAN_generator/cycleGAN_result_out.ipynb) 
-
-![ezgif com-gif-maker (1)](https://user-images.githubusercontent.com/96898057/172393501-7a137de4-29d3-42ce-9de9-38e3a57fc517.gif)![ezgif com-gif-maker](./gifs/overcast_resized.gif)<br>
-　　　　　　　　　　　　original  　　　　　　　　　　　　　　　　　　　　 overcast<br><br>
-![fog](./gifs/foggy_resized.gif)![rain](./gifs/rain_resized.gif)<br>
-　　　　　　　　　　　　　fog 　　　　　　　　　　　　　　　　　　　　　　　rain
-
+  ![ezgif com-gif-maker (1)](https://user-images.githubusercontent.com/96898057/172393501-7a137de4-29d3-42ce-9de9-38e3a57fc517.gif)![ezgif com-gif-maker](./gifs/overcast_resized.gif)<br>
+  　　　　　　　　　　　　　　original  　　　　　　　　　　　　　　　　　　　　 overcast<br><br>
+  ![fog](./gifs/foggy_resized.gif)![rain](./gifs/rain_resized.gif)<br>
+  　　　　　　　　　　　　　　　fog 　　　　　　　　　　　　　　　　　　　　　　　rain
+  </div>
 
 <details>
   <summary>about CycleGan</summary>
   <div markdown="1">
-    https://github.com/junyanz/pytorch-CycleGAN-and-pix2pix/blob/master/docs/README_es.md
-  </div>
+
+<details>
+<summary>CycleGan Abstract</summary>
+
+  ![1](./imgs/pix2pix_cyclegan_comapred_img.png)
+
+  Image-to-Image translation은  train 세트를 이용해 인풋 이미지와 아웃풋 이미지를 매핑하여 그럴듯한 이미지를 만드는 것이 목표이다.  cycle gan 이전에는 많은 태스크에 있어서 **짝이 지어진 학습 데이터**를 사용하여 Image to Image translation은 가능하였지만 짝지어지지 않은 image는 tralation하기 힘들었다. 이 부분을 해결해 주기 위해  **짝지어진 예시 없이 X라는 도메인으로부터 얻은 이미지를 타깃 도메인 Y로 바꾸는 방법**을 제안하는 모델입니다.
+
+<div markdown="1">
+</div>
 </details>
+
+<details>
+<summary>모델 선정 이유</summary>
+
+  ![2](./imgs/cycle_gan_genrator.png)
+
+  - vkitti와 다른 현실적인 환경의 dataset에 짝이 없기 때문.
+
+  - Cycle gan의 ganerator model이 Encoder Decorder이 아닌 Resnet을 이용합니다. Resnet Redisual block의 skip connection은 depth별 이미지 층에 대한 정보가 남아있기 때문에  전체적인 source의 원본을 유지를 한다고 말합니다.
+
+  >저희는 Vkitti 원본을 보존하고 bdd100k의 다른 domain 환경으로 변경하는데 효과적일 것같다고 생각되어 cycle gan을 선정하였습니다.
+
+  - 그림의 u-net 또한 skip connection을 가지고 있지만  Encoder-Decoder를 기반으로 한 UNet 은 극단적인 bottleneck 구조입니다.
+  이러한 구조의 장점은 모양의 변화가 가능하지만, 모델의 학습 자체가 굉장히 불안정하다고 합니다.  
+  또한 입력과 목표 데이터가 비슷할 경우 Skip Connection의 사용이 늘어나 모델의 depth 적인 측면으로 학습이 전혀 되지 않는다고 말합니다.
+  특징으로는 UNet을 이용해 학습을 할 시 결과 이미지에서의 모양에 대한 변화가 크다고 합니다.
+
+
+<div markdown="1">
+</div>
+</details>
+
+<details>
+<summary>CycleGan 핵심 아이디어</summary>
+
+  ## gan의 moving target에 제약 조건을 건다.
+  gan은 target이 명확하지 않다. Descripter와 Generator가 서로의 loss를 줄여나가는 과정에 있어서 그럴듯한 target을 뽑는 것이 목표이다.  그렇기 때문에 생기는 문제가 mode collpase이다. 
+
+  mode collapse를 쉽게 이야기하자면 input을 어떤것을 넣어도 정답과 유사하다고 판단하는 같은 output을 내는 문제이다. 
+  이 문제를 해결하기 위한 cycle consisitency loss의 컨셉은 이 이미지가 x->y로 맵핑 될때 y->x로 다시 돌아갈 수준으로 이미지를 translation 하는 것이다. 
+
+  ![3](./imgs/cycle%20Consistency%20loss.png)
+  ![4](./imgs/cyclegan_adversal.png)
+
+  정확하게는 G(x)로부터의 이미지 데이터의 분포와 Y로부터의 이미지 데이터의 분포가 구분 불가능하도록 G:X→Y G:X→Y G : X → Y 를 학습시키는 것이다. 이러한 매핑(함수)은 제약이 적기 때문에, 우리는  F:Y→XF:Y→X F : Y → X  와 같은 역방향 매핑을 진행, F(G(x))F(G(x)) F(G(x)) 가 X와 유사해지도록 강제하는 cycle consistency loss를 도입하여 mode collapse를 해결
+
+
+
+
+</div>
+</div>
+
+
 <br>
 
-#### Neural Style Transfer 
+
+
+　　　**Neural Style Transfer**
 
 ![normal 20](https://user-images.githubusercontent.com/96898057/172377408-ae27f769-2bb4-407e-8989-969a4f999ddc.gif)![rain neural20](https://user-images.githubusercontent.com/96898057/172378068-0e5d78ea-3d48-40c6-a3fa-9b89c6b123a4.gif)<br>
 　　　　　　　　　　　　original 　　　　　　　　　　　　　　　　　　　　　　rain<br>
