@@ -1,5 +1,5 @@
 
-# style transfer를 통한 domain adaption 
+# Synthetic Image translation 통한 Domain Adaption 
 
 
 ### **photo synthesis 팀 구성**
