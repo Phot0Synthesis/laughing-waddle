@@ -122,15 +122,37 @@ yolov5모델에서 [Kitti+vkitti데이터셋](preparing_dataset/yolov5/vkitti_ki
 다양한 환경에 대한 학습을 위해 데이터 증강 기법을 적용할 필요성을 느낌
 <br>
 
-### □ 해결 방안 수립
+### □ 해결을 위한 방향성
 - ### Domain Apdaptaion 
-  ㅁㄴㅇㄹ
-- ### DR
-  ㅁㄴㅇㄹ
-- #### 앤드류응 data centric 
-  ㅁㄴㅇㄹ
+![](./imgs/domainadapted.png)
+>source domain과 target domain의 domain shift를 transfer learning을 통해 줄인다.
+Transfer learning이라 하면 GAN과 같은 모델로 source image와 target image 사이의 간극을 줄일 수 있다.
+합성데이터를 이용해 real data를 대비하여 학습시킨다 
 
+- ### DR
+![](./imgs/Domainrandomazation.png)
+>질이 떨어지는 데이터로도 최선의 성능을 끌어내자 
+질 좋은 데이터를 학습시키더라도 세상에 있는 많은 변수들에 대해 일반화하는 것은 불가능하기에 각종 데이터에 변수들을 넣어줘 어떤 변수에 있어서라도 대응을 하는 데이터셋을 만들자
+
+
+- #### 앤드류응 Data Centric
+![](./imgs/datacentric.png)
+
+>아무 이미지나 학습하는 것보다 하이퀄리티 이미지 학습시키는 것이 좋다.
+값비싼 좋은 재료로 요리하는 것과 같다. 라벨링의 일관성이 핵심이다 .합성 데이터 프로그램에 투자할 필요가 있다. 더 좋은 데이터를 통해 모델의 성능을 높인다.
+
+----------------------------------------------
+
+### Neural style transfer
+>DR기법과 DA기법의 접근을 같이 가져간것으로 원본의 퀄리티가 떨어지지만 cotnets에 대한 가중치와 style에 대한 가중치의 조절 그리고 여러 style을 접목 시킬 수 있음으로 다양한 데이터를 만들 수 있다. 
+
+### Cycle gan
+>DC와 DA의 접근을 가져간 것으로 cycle gan의 모델의 generator 모델은 resnet 사용하기 때문에 이미지의 품질이 보장되었고 결국 환경을 바꾸면서도 품질이 높은 이미지를 만들 수 있었다.
+
+### 예측 결과
 >기존 vkitti의 다양한 환경에서의 데이터셋이 현실 세계에서의 특징을 제대로 반영하지 못하여 학습 성능이 떨어진다고 판단하여, cycleGAN과 neural style transfer와 같은 모델을 사용하여 현실 세계의 특성을 합성 데이터셋에 적용시킬 수 있다면 보다 더 나은 학습 결과를 기대할 수 있을 것
+
+
 
 <br>
 
