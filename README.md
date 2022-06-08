@@ -136,7 +136,7 @@ yolov5모델에서 [Kitti+vkitti데이터셋](preparing_dataset/yolov5/vkitti_ki
 
 ### □ data augmentation
 
-#### Cycle Gan 
+#### [Cycle Gan](preparing_dataset/cycleGAN/cycleGAN_generator/cycleGAN_result_out.ipynb) 
 
 ![ezgif com-gif-maker (1)](https://user-images.githubusercontent.com/96898057/172393501-7a137de4-29d3-42ce-9de9-38e3a57fc517.gif)![ezgif com-gif-maker](./gifs/overcast_resized.gif)<br>
 　　　　　　　　　　　　original  　　　　　　　　　　　　　　　　　　　　 overcast<br><br>
@@ -260,6 +260,8 @@ yolov5모델에서 [Kitti+vkitti데이터셋](preparing_dataset/yolov5/vkitti_ki
 - '0-5', '0-10', '0-전체'는 가려진 객체의 비율(1:1:1)로 나누어 결정하였습니다.
 
   <img src="./imgs/occluded_instance_amount.png" width="500" height="400">
+
+[val_result folder](https://github.com/Phot0Synthesis/sim2real/tree/main/test_result)
 
 ### kitti + vkitti + cycleGAN mAP@0.5 result
 |occlusion amount|baseline|ours(cycleGAN)|
