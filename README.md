@@ -145,9 +145,9 @@ yolov5모델에서 [Kitti+vkitti데이터셋](preparing_dataset/yolov5/vkitti_ki
 
 
 <details>
-  <summary>CycleGan 이란?</summary>
+  <summary>about CycleGan</summary>
   <div markdown="1">
-
+    https://github.com/junyanz/pytorch-CycleGAN-and-pix2pix/blob/master/docs/README_es.md
   </div>
 </details>
 <br>
@@ -160,7 +160,7 @@ yolov5모델에서 [Kitti+vkitti데이터셋](preparing_dataset/yolov5/vkitti_ki
 
   
 <details>
-<summary>Neural Style Transfer란?</summary>
+<summary>about Neural Style Transfer</summary>
 <div markdown="1">
 
   - Neural Style Transfer
