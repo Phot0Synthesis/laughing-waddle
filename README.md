@@ -46,9 +46,9 @@
 
 ### 학습에 사용된 데이터셋
 - **BDD100K** : 환경별로 분류하여 CycleGAN모델 학습에 사용
-- **kitti+vkitti(Baseline)** : kitti와 vkitti를 각각 사용
-- **kitti+vkitti+CycleGAN** : Baseline의 환경적인 부분을 CycleGAN으로 생성한 데이터로 대치
-- **kitti+vkitti+NST** : Baseline의 환경적인 부분을 neural style transfer로 생성한 데이터로 대치
+- [**kitti+vkitti(Baseline)**](preparing_dataset/yolov5/vkitti_kitti_generator.ipynb) : kitti와 vkitti를 각각 사용
+- [**kitti+vkitti+CycleGAN**](preparing_dataset/yolov5/cycleGAN_train_dataset_generator.ipynb) : Baseline의 환경적인 부분을 [CycleGAN으로 생성한 데이터](preparing_dataset/cycleGAN/cycleGAN_generator/cycleGAN_generator.ipynb)로 대치
+- **kitti+vkitti+NST** : Baseline의 환경적인 부분을 [neural style transfer로 생성한 데이터](preparing_dataset/NeuralStyleTransfer/Neural_Style_Transfer.ipynb)로 대치
 
 ### 검증에 사용된 데이터셋
 - **BDD100K** : BDD100K의 train 데이터셋을 가려진 객체의 수의 비율로 분류하여 사용
@@ -89,7 +89,7 @@
 yolov5 + kitti + vkitti(모든 환경) img
 ```
 
-yolov5모델에서 Kitti+vkitti데이터셋으로 학습시킨 경우 가려진 객체를 어느정도 탐지<br>
+yolov5모델에서 [Kitti+vkitti데이터셋](preparing_dataset/yolov5/vkitti_kitti_generator.ipynb)으로 학습시킨 경우 가려진 객체를 어느정도 탐지<br>
 
 <details>
   <summary>
@@ -145,9 +145,10 @@ yolov5모델에서 Kitti+vkitti데이터셋으로 학습시킨 경우 가려진 
 
 
 <details>
-<summary>CycleGan 이란?</summary>
-<div markdown="1">
-</div>
+  <summary>CycleGan 이란?</summary>
+  <div markdown="1">
+
+  </div>
 </details>
 <br>
 
