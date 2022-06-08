@@ -32,14 +32,12 @@
 
 ### □ **데이터 정보**
 
-|   |  Kitti   |  vkitti  | BDD100K |
-|:---:|:---:|:-------:| :---:|
-| # Sequences |  22  | 5  | 100,000 |
-| # Images |  14,999  | 2612  | 120,000,000|
-| Multiple Cities |  No  | No  | Yes|
-| Multiple Weathers |  No  | Yes  | Yes|
-| Multiple Times of Day |  No  | No | Yes|
-| Multiple Scene types |  Yes  | Yes | Yes|
+| | #Sequences | #Images | Multiple Cities | Multiple Weathers | Multiple Times of Day | Multiple Scene types |
+|:---:|:---:|:----:| :---:|:---:|:---:|:---:|
+| Kitti | 22 | 14,999|No|No|No|Yes| 
+| vKitti | 5|2,612|No|Yes|No|Yes|
+| BDD100K |  100,000|120,000,000|Yes|Yes|Yes|Yes|
+
 
 ### 사용된 원본 데이터셋
 - **kitti** : 자율주행을 위한 현실 데이터셋
@@ -260,7 +258,7 @@ yolov5모델에서 Kitti+vkitti데이터셋으로 학습시킨 경우 가려진 
 - 가려진 객체(car,van,truck)의 개수가 '0-5', '0-10', '0-전체'인 데이터셋으로 분리하여 검증했습니다.
 - '0-5', '0-10', '0-전체'는 가려진 객체의 비율(1:1:1)로 나누어 결정하였습니다.
 
-<img src="./imgs/occluded_instance_amount.png" width="430" height="280">
+<img src="./imgs/occluded_instance_amount.png" width="500" height="400">
 
 #### kitti + vkitti + cycleGAN mAP@0.5 result
 |occlusion amount|baseline|ours(cycleGAN)|
