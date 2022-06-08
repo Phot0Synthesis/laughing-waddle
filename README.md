@@ -35,7 +35,7 @@
 | | #Sequences | #Images | Multiple Cities | Multiple Weathers | Multiple Times of Day | Multiple Scene types |
 |:---:|:---:|:----:| :---:|:---:|:---:|:---:|
 | Kitti | 22 | 14,999|No|No|No|Yes| 
-| vKitti | 5|2,612|No|Yes|No|Yes|
+| vKitti | 5|2,126|No|Yes|No|Yes|
 | BDD100K |  100,000|120,000,000|Yes|Yes|Yes|Yes|
 
 
@@ -352,9 +352,9 @@ Transfer learning이라 하면 GAN과 같은 모델로 source image와 target im
 ### kitti + vkitti + Neural Style Transfer mAP@0.5 result
 |occlusion amount|baseline|ours(NST)|
 |:--:|:--:|:--:|
-|0~5|0.379|ㅁㄴㅇㄹ|
-|0~10|0.358|ㅁㄴㅇㄹ|
-|0~all|0.342|ㅁㄴㅇㄹ|
+|0~5|0.379|0.376|
+|0~10|0.358|0.355|
+|0~all|0.342|0.376|
 
 > 합성데이터에 환경정보를 추가한 데이터셋의 가려진 객체 탐지에 있어서 성능 향상이 있음을 확인할 수 있습니다.
 
