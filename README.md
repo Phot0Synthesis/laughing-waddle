@@ -253,14 +253,14 @@ yolov5모델에서 Kitti+vkitti데이터셋으로 학습시킨 경우 가려진 
 
 ### □ 검증
 
-#### validation dataset
+### validation dataset
 - BDD100K의 train데이터셋 전부를 val dataset으로 사용하였습니다.
 - 가려진 객체(car,van,truck)의 개수가 '0-5', '0-10', '0-전체'인 데이터셋으로 분리하여 검증했습니다.
 - '0-5', '0-10', '0-전체'는 가려진 객체의 비율(1:1:1)로 나누어 결정하였습니다.
 
-<img src="./imgs/occluded_instance_amount.png" width="500" height="400">
+  <img src="./imgs/occluded_instance_amount.png" width="500" height="400">
 
-#### kitti + vkitti + cycleGAN mAP@0.5 result
+### kitti + vkitti + cycleGAN mAP@0.5 result
 |occlusion amount|baseline|ours(cycleGAN)|
 |:--:|:--:|:--:|
 |0~5|0.379|**0.413**|
@@ -269,7 +269,7 @@ yolov5모델에서 Kitti+vkitti데이터셋으로 학습시킨 경우 가려진 
 
 
 
-#### kitti + vkitti + Neural Style Transfer mAP@0.5 result
+### kitti + vkitti + Neural Style Transfer mAP@0.5 result
 |occlusion amount|baseline|ours(NST)|
 |:--:|:--:|:--:|
 |0~5|0.379|ㅁㄴㅇㄹ|
@@ -278,6 +278,7 @@ yolov5모델에서 Kitti+vkitti데이터셋으로 학습시킨 경우 가려진 
 
 > 합성데이터에 환경정보를 추가한 데이터셋의 가려진 객체 탐지에 있어서 성능 향상이 있음을 확인할 수 있습니다.
 
+<br><br>
 
 ## reference 
 
@@ -318,7 +319,7 @@ Context-Aware Synthetic Data](https://arxiv.org/pdf/1810.10093.pdf)
 
 <br>
 
-## timestamp
+### timestamp
 <details>
 <summary>5월 13일</summary>
 
