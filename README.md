@@ -4,15 +4,11 @@ development by Photo synthesis
 
 
 # 기업 과업 소개
-<<<<<<< HEAD
+
 ![image](https://user-images.githubusercontent.com/96898057/172413781-cee22cb5-6a19-458c-bc17-2351cc194cfa.png)
 - 대낮과 같은 일반적인 환경에서는 detecting 성능이 준수하지만, 자연 환경이 변하면 detecting 성능이 떨어짐
 - Photo Sythesis 팀은 다양한 환경에서도 detecting 성능을 높히는 방법 대해 연구중에 있으며, 제한된 데이터를 image augmentation으로 다양한 환경으로 증강 시킨 후 학습하여 성능 개선을 기대함.
 
-=======
-
-Occlusion관련 얘기
->>>>>>> de1e86f (readme.md changes)
 
 
 ------------------------------
@@ -85,7 +81,7 @@ conetent 가중치 설명
 합성데이터를 바꾸는것 -> cost가 적다. -> cycle gan이나 neural style 바꿔서 조금더 좋은 품질인가? 더 realstic한 이미지가 도움이된다.
 
 ## Cycle Gan 
-<<<<<<< HEAD
+
 ![ezgif com-gif-maker (1)](https://user-images.githubusercontent.com/96898057/172393501-7a137de4-29d3-42ce-9de9-38e3a57fc517.gif)![ezgif com-gif-maker](./gifs/overcast_resized.gif)<br>
 　　　　　　　　　　　　original  　　　　　　　　　　　　　　　　　　　　 overcast<br><br>
 ![fog](./gifs/foggy_resized.gif)![rain](./gifs/rain_resized.gif)<br>
@@ -194,39 +190,25 @@ conetent 가중치 설명
   
 </div>
 </details> 
-=======
-변경 이미지나 gif 
-> 토글 > 설명
-
-## Nerual Style Tranfer 
-이미지 변경이미지 gif 
->토글 > 설명
->>>>>>> de1e86f (readme.md changes)
 
 
 <br>
 
 
 ---------------------------------------------------------------------------------
-<<<<<<< HEAD
-2. 사용 Dataset
-  - vkitti_2.0.3(vkitti_rgb(14Gb))
-  - kitti_rgb_2015(8Gb)
-  - bdd100k
-  
-=======
+
 2. Used Dataset
   - vkitti_2.0.3(vkitti_rgb(14Gb))
   - kitti_2015_rgb(8Gb)
   - BDD100K Images(5.3GB)
 
->>>>>>> de1e86f (readme.md changes)
+
 ---------------------------------------------------------------------------------
 3. 진행도
 
 <details>
 <summary>5월 13일</summary>
-<<<<<<< HEAD
+
 <div markdown="1">
 yolov5을 vkitti 2.0.3의 일부분의 데이터를 가지고 시험적으로 학습시켜보았습니다.
 
@@ -380,18 +362,6 @@ python train.py  --img 1280 --batch 8 --epochs 300 --data '../datasets/vkitti2.0
 </details>
   </div>
 </details>
-=======
------------------------------------------------------------------------------
-
-# 결과
-test data에 대한 설명
-(제약조건, 이유)
-
-
-test 결과 (map , 정성적인 것)
-
-
->>>>>>> de1e86f (readme.md changes)
 
 
 
@@ -406,22 +376,13 @@ test 결과 (map , 정성적인 것)
 ![occluded instance amount in BDD100K train dataset](./imgs/occluded_instance_amount.png)
 
 
-<<<<<<< HEAD
 ## kitti + vkitti + cycleGAN mAP@0.5 result
 |occlusion amount|baseline|ours(cycleGAN)|
 |:--:|:--:|:--:|
 |0~5|0.379|**0.413**|
 |0~10|0.358|**0.387**|
 |0~all|0.342|**0.365**|
-=======
 
---------------------------------------------------------------
-  
-예상 되는 문제점과 더 생각해볼점
-- Neural Style Transfer를 사용하면서 어떻게 시간을 단축시킬 수 있을지
-- 어떻게 더 자연스러운 환경 이미지를 구축할 수 있을지
-- 
->>>>>>> de1e86f (readme.md changes)
 
 
 ## kitti + vkitti + Neural Style Transfer mAP@0.5 result
@@ -441,7 +402,6 @@ Context-Aware Synthetic Data](https://arxiv.org/pdf/1810.10093.pdf)
 
 [2] [Photorealistic Style Transfer via Wavelet Transforms](https://openaccess.thecvf.com/content_ICCV_2019/papers/Yoo_Photorealistic_Style_Transfer_via_Wavelet_Transforms_ICCV_2019_paper.pdf) 
 
-<<<<<<< HEAD
 [3] [Unpaired Image-to-Image Translation using Cycle-Consistent Adversarial Networks](https://arxiv.org/pdf/1703.10593.pdf)
 
 [4] [KITTI : Object Scene Flow for Autonomous Vehicles](http://www.cvlibs.net/publications/Menze2015CVPR.pdf)
@@ -456,12 +416,3 @@ Context-Aware Synthetic Data](https://arxiv.org/pdf/1810.10093.pdf)
 [8] https://github.com/junyanz/pytorch-CycleGAN-and-pix2pix
 
 [9] https://github.com/ultralytics/yolov5
-
-[10] Photorealistic Style Transfer via Wavelet Transforms(Jaejun Yoo, Youngjung Uh, Sanghyuk Chun, Byeongkyu Kang, Jung-Woo Ha)  
-
-[11] https://github.com/sukkritsharmaofficial/NEURALFUSE
-=======
-[3]
-
-
->>>>>>> de1e86f (readme.md changes)
