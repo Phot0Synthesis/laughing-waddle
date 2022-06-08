@@ -1,76 +1,166 @@
-# 팀 Photo synthesis
-### [허준호, 류한웅, 안희상, 양원규]
-development by Photo synthesis
+
+# style transfer를 통한 domain adaption 
 
 
-# 기업 과업 소개
+### **photo synthesis 팀 구성**
 
+
+| 이름   |  구성   |                      역할                  |
+|:---:|:---:|:-------------------------------------:| 
+| 류한웅 |  팀장  | yolov5, cycleGAN, 데이터 정제 및 생성   | 
+| 안희상 |  팀원  | Neural Style Transfer, 외부 데이터 수집, PPT 작성  | 
+| 허준호 |  팀원  | yolov5, cycleGAN, 데이터 정제 및 생성, 결과 시각화  | 
+| 양원규 |  팀원  | Neural Style Transfer, 데이터 분석, 결과 시각화 | 
+
+
+
+### **Environments**
+
+- Ubuntu 18.04 LTS
+- Docker
+- AMD Ryzen5 5600x
+- Geforce RTX 3080 12GB / RAM 32GB
+- Jupyter notebook
+
+
+<br>
+
+
+## 🗒️ Content
+
+--- 
+
+### □ **데이터 정보**
+
+|   |  Kitti   |  vkitti  | BDD100K |
+|:---:|:---:|:-------:| :---:|
+| # Sequences |  22  | 5  | 100,000 |
+| # Images |  14,999  | 2612  | 120,000,000|
+| Multiple Cities |  No  | No  | Yes|
+| Multiple Weathers |  No  | Yes  | Yes|
+| Multiple Times of Day |  No  | No | Yes|
+| Multiple Scene types |  Yes  | Yes | Yes|
+
+### 사용된 원본 데이터셋
+- **kitti** : 자율주행을 위한 현실 데이터셋
+- **vkitti 2**  : 자율주행을 위한 합성 데이터셋
+- **BDD100K** : kitti에는 없는 다양한 환경의 현실 데이터셋
+
+### 학습에 사용된 데이터셋
+- **BDD100K** : 환경별로 분류하여 CycleGAN모델 학습에 사용
+- **kitti+vkitti(Baseline)** : kitti와 vkitti를 각각 사용
+- **kitti+vkitti+CycleGAN** : Baseline의 환경적인 부분을 CycleGAN으로 생성한 데이터로 대치
+- **kitti+vkitti+NST** : Baseline의 환경적인 부분을 neural style transfer로 생성한 데이터로 대치
+
+### 검증에 사용된 데이터셋
+- **BDD100K** : BDD100K의 train 데이터셋을 가려진 객체의 수의 비율로 분류하여 사용
+
+### □ **모델 정보**
+  
+
+
+<br>
+
+
+## 📒 진행 과정
+
+---
+
+## Overview
+
+### □ Purpose
+- 실제 환경의 데이터셋을 합성 데이터셋에 반영하여 domain gap reduce
+![image/Untitled%201.png](./imgs/vkitti_bdd100k.png)
+
+### □ Structure
+```
+한웅's flow chart img
+```
+
+- 사용 모델 : yolov5, cycleGAN, neural style transfer
+- 모델 평가 및 지표 : occluded dataset, mAP@0.5
+
+
+## Process
+
+### □ 기업 과업 소개(문제 인식 및 도출)
 ![image](https://user-images.githubusercontent.com/96898057/172413781-cee22cb5-6a19-458c-bc17-2351cc194cfa.png)
 - 대낮과 같은 일반적인 환경에서는 detecting 성능이 준수하지만, 자연 환경이 변하면 detecting 성능이 떨어짐
-- Photo Sythesis 팀은 다양한 환경에서도 detecting 성능을 높히는 방법 대해 연구중에 있으며, 제한된 데이터를 image augmentation으로 다양한 환경으로 증강 시킨 후 학습하여 성능 개선을 기대함.
+- Photo Sythesis 팀은 다양한 환경에서도 detecting 성능을 높히는 방법 대해 연구하였으며, 제한된 데이터를 image augmentation을 통해 다양한 환경으로 증강 시킨 후 학습하여 성능 개선을 이룸
 
+### □ 원인 분석
+```
+yolov5 + kitti + vkitti(모든 환경) img
+```
 
+yolov5모델에서 Kitti+vkitti데이터셋으로 학습시킨 경우 가려진 객체를 어느정도 탐지<br>
 
-------------------------------
-# 원인 분석
-
-## 원인 분석을 위한 방법 
-- Detecting model : yolov5
-- Train Dataset : kitti , vkitti 
-- test dataset : bdd100k , kitti
-
----------------------------------------------------
-
-## Occlusion 문제가 잘 Detecting 되는 원인
- ### yolov5 data agumentation 혹은 vkitti kitti 자체의 바운딩박스 규칙 또는 vkitti와 kitti의 데이터셋 안에 있는 occlusion된 상황만을 잘 인식 할 수도 있다.
- 
 <details>
-<summary>Occlusion 문제가 잘 Detecting 되는  </summary>
-<div markdown="1">
+  <summary>
+    가려진 객체를 잘 검출하게 되는 요인
+  </summary>
+  <div markdown="1">
 
-- Bag of freebies
-  
-  bag of freebies는 Data augmentation, Loss function, Regularization 등 학습에 관여하는 요소로, training cost를 증가시켜서 정확도를 높이는 방법들을 의미한다.
-  
-- Bag of Specials
-  
-  Bag of Specials는 architecture 관점에서의 기법들이 주를 이루고 post processing도 포함이 되어 있으며, 오로지 inference cost만 증가시켜서 정확도를 높이는 기법들을 의미한다.
-  
-- Self-Adversarial Training
-
-  input image에 FGSM과 같은 adversarial attack을 가해서 model이 예측하지 못하게 만든다. 그 후 perturbed image와 원래의 bounding box GT를 가지고 학습을 시키는 것을 Self-Adversarial Training이라 한다. 이 방식은 보통 정해진 adversarial attack에 robustness를 높이기 위해 진행하는 defense 방식인데, 이러한 기법을 통해 model이 detail한 부분에 더 집중하는 효과를 보고 있다.
-  
-- Mosaic Augmentation
-  
-  각기 다른 4개의 image와 bounding box를 하나의 512x512 image로 합쳐주며, 당연히 image의 모양 변화에 따라bounding box GT 모양도 바뀌게 된다. 이를 통해 하나의 input으로 4개의 image를 배우는 효과를 얻을 수 있어 Batch Normalization의 statistics 계산에 좋은 영향을 줄 수 있다고 한다. 
-  
-  Mosaic Augmentation을 이용하면 기존 batch size가 4배로 커지는 것과 비슷한 효과를 볼 수 있어 작은 batch size를 사용해도 학습이 잘된다.
-  
-  또한, 4개의 image를 하나로 합치는 과정에서 자연스럽게 small object들이 많아지다 보니 small object를 학습에서 많이 배우게 되어 small object에 대한 성능이 높아지는 효과도 
-  있는 것 같다.
-</div>
+  - ### Bag of freebies
+    bag of freebies는 Data augmentation, Loss function, Regularization 등 학습에 관여하는 요소로, training cost를 증가시켜서 정확도를 높이는 방법들을 의미한다.
+    
+  - ### Bag of Specials
+    Bag of Specials는 architecture 관점에서의 기법들이 주를 이루고 post processing도 포함이 되어 있으며, 오로지 inference cost만 증가시켜서 정확도를 높이는 기법들을 의미한다.
+    
+  - ### Self-Adversarial Training
+    input image에 FGSM과 같은 adversarial attack을 가해서 model이 예측하지 못하게 만든다. 그 후 perturbed image와 원래의 bounding box GT를 가지고 학습을 시키는 것을 Self-Adversarial Training이라 한다. 이 방식은 보통 정해진 adversarial attack에 robustness를 높이기 위해 진행하는 defense 방식인데, 이러한 기법을 통해 model이 detail한 부분에 더 집중하는 효과를 보고 있다.
+    
+  - ### Mosaic Augmentation
+    각기 다른 4개의 image와 bounding box를 하나의 512x512 image로 합쳐주며, 당연히 image의 모양 변화에 따라bounding box GT 모양도 바뀌게 된다. 이를 통해 하나의 input으로 4개의 image를 배우는 효과를 얻을 수 있어 Batch Normalization의 statistics 계산에 좋은 영향을 줄 수 있다고 한다. 
+    
+    Mosaic Augmentation을 이용하면 기존 batch size가 4배로 커지는 것과 비슷한 효과를 볼 수 있어 작은 batch size를 사용해도 학습이 잘된다.
+    
+    또한, 4개의 image를 하나로 합치는 과정에서 자연스럽게 small object들이 많아지다 보니 small object를 학습에서 많이 배우게 되어 small object에 대한 성능이 높아지는 효과도 
+    있는 것 같다.
+  </div>
 </details>
+<br>
+
+```
+밝은날(탐지 잘됨) / fog,rain,overcast(탐지 안됨) img
+```
+하지만 학습 데이터셋에 없는 다른 환경에 대해서는 성능이 저조함을 발견하고,
+다양한 환경에 대한 학습을 위해 데이터 증강 기법을 적용할 필요성을 느낌
+<br>
+
+>기존 vkitti의 다양한 환경에서의 데이터셋이 현실 세계에서의 특징을 제대로 반영하지 못하여 학습 성능이 떨어진다고 판단하여, cycleGAN과 neural style transfer와 같은 모델을 사용하여 현실 세계의 특성을 합성 데이터셋에 적용시킬 수 있다면 보다 더 나은 학습 결과를 기대할 수 있을 것
+
+### □ 해결 방안 수립
+- Domain Apdaptaion 
+- DR 
+- 앤드류응 data centric 
 
 
-# 현실세계에서 Detecting을 하는데 발생하는 원인
-- 물체나 사물에 가려져 있는 객체
-- 다양한 자연 환경으로 인한 blur로 Detecting 성능 저하
-- 한정되어 있는 합성 데이터를 통해 학습할 시 다양한 환경에 대한 대비가 미흡
-=> 맑은 날씨 기준의 데이터를 다양한 환경으로 변화 시켜 Object Detecting의 성능을 개선해보자
+### □ 검증
 
 
-iteraion 
-img size 
-conetent 가중치 설명
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
 
 
 ----------------------------------------
 # 문제를 해결하기 위한 방안   
 
 
-# Domain Apdaptaion 
-# DR 
-# 앤드류응 data centric 
+
 
 - 얘네들의 말중에 괜찮은 부분을 비벼서 우리가 했다라고 말할 수 있다.
 이부분은 전적 
@@ -388,9 +478,9 @@ python train.py  --img 1280 --batch 8 --epochs 300 --data '../datasets/vkitti2.0
 ## kitti + vkitti + Neural Style Transfer mAP@0.5 result
 |occlusion amount|baseline|ours(NST)|
 |:--:|:--:|:--:|
-|0~5|ㅁㄴㅇㄹ|ㅁㄴㅇㄹ|
-|0~10|ㅁㄴㅇㄹ|ㅁㄴㅇㄹ|
-|0~all|ㅁㄴㅇㄹ|ㅁㄴㅇㄹ|
+|0~5|0.379|ㅁㄴㅇㄹ|
+|0~10|0.358|ㅁㄴㅇㄹ|
+|0~all|0.342|ㅁㄴㅇㄹ|
 
 > 합성데이터에 환경정보를 추가한 데이터셋의 가려진 객체 탐지에 있어서 성능 향상이 있음을 확인할 수 있습니다.
 
