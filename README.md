@@ -55,8 +55,6 @@
 ### 검증에 사용된 데이터셋
 - **BDD100K** : BDD100K의 train 데이터셋을 가려진 객체의 수의 비율로 분류하여 사용
 
-### □ **모델 정보**
-  
 
 
 <br>
@@ -69,7 +67,7 @@
 ## Overview
 
 ### □ Purpose
-- 실제 환경의 데이터셋을 합성 데이터셋에 반영하여 domain gap reduce
+- 실제 환경의 데이터셋을 합성 데이터셋에 반영하여 **domain gap reduce**
 ![image/Untitled%201.png](./imgs/vkitti_bdd100k.png)
 
 ### □ Structure
@@ -128,49 +126,19 @@ yolov5모델에서 Kitti+vkitti데이터셋으로 학습시킨 경우 가려진 
 다양한 환경에 대한 학습을 위해 데이터 증강 기법을 적용할 필요성을 느낌
 <br>
 
+### □ 해결 방안 수립
+- ### Domain Apdaptaion 
+  ㅁㄴㅇㄹ
+- ### DR
+  ㅁㄴㅇㄹ
+- #### 앤드류응 data centric 
+  ㅁㄴㅇㄹ
+
 >기존 vkitti의 다양한 환경에서의 데이터셋이 현실 세계에서의 특징을 제대로 반영하지 못하여 학습 성능이 떨어진다고 판단하여, cycleGAN과 neural style transfer와 같은 모델을 사용하여 현실 세계의 특성을 합성 데이터셋에 적용시킬 수 있다면 보다 더 나은 학습 결과를 기대할 수 있을 것
 
-### □ 해결 방안 수립
-- Domain Apdaptaion 
-- DR 
-- 앤드류응 data centric 
+### □ data augmentation
 
-
-### □ 검증
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
-
-
-
-----------------------------------------
-# 문제를 해결하기 위한 방안   
-
-
-
-
-- 얘네들의 말중에 괜찮은 부분을 비벼서 우리가 했다라고 말할 수 있다.
-이부분은 전적 
-
-- CycleGan, Neural Style Transfer로 DataAugmentation을 하여 학습데이터양을 증대
----------------------------------------
-가설
-합성데이터를 바꾸는것 -> cost가 적다. -> cycle gan이나 neural style 바꿔서 조금더 좋은 품질인가? 더 realstic한 이미지가 도움이된다.
-
-## Cycle Gan 
+#### Cycle Gan 
 
 ![ezgif com-gif-maker (1)](https://user-images.githubusercontent.com/96898057/172393501-7a137de4-29d3-42ce-9de9-38e3a57fc517.gif)![ezgif com-gif-maker](./gifs/overcast_resized.gif)<br>
 　　　　　　　　　　　　original  　　　　　　　　　　　　　　　　　　　　 overcast<br><br>
@@ -185,7 +153,7 @@ yolov5모델에서 Kitti+vkitti데이터셋으로 학습시킨 경우 가려진 
 </details>
 <br>
 
-## Neural Style Transfer 
+#### Neural Style Transfer 
 
 ![normal 20](https://user-images.githubusercontent.com/96898057/172377408-ae27f769-2bb4-407e-8989-969a4f999ddc.gif)![rain neural20](https://user-images.githubusercontent.com/96898057/172378068-0e5d78ea-3d48-40c6-a3fa-9b89c6b123a4.gif)<br>
 　　　　　　　　　　　　original 　　　　　　　　　　　　　　　　　　　　　　rain<br>
@@ -285,17 +253,74 @@ yolov5모델에서 Kitti+vkitti데이터셋으로 학습시킨 경우 가려진 
 <br>
 
 
----------------------------------------------------------------------------------
+### □ 검증
 
-2. Used Dataset
-  - vkitti_2.0.3(vkitti_rgb(14Gb))
-  - kitti_2015_rgb(8Gb)
-  - BDD100K Images(5.3GB)
+#### validation dataset
+- BDD100K의 train데이터셋 전부를 val dataset으로 사용하였습니다.
+- 가려진 객체(car,van,truck)의 개수가 '0-5', '0-10', '0-전체'인 데이터셋으로 분리하여 검증했습니다.
+- '0-5', '0-10', '0-전체'는 가려진 객체의 비율(1:1:1)로 나누어 결정하였습니다.
+
+![occluded instance amount in BDD100K train dataset](./imgs/occluded_instance_amount.png)
 
 
----------------------------------------------------------------------------------
-3. 진행도
+#### kitti + vkitti + cycleGAN mAP@0.5 result
+|occlusion amount|baseline|ours(cycleGAN)|
+|:--:|:--:|:--:|
+|0~5|0.379|**0.413**|
+|0~10|0.358|**0.387**|
+|0~all|0.342|**0.365**|
 
+
+
+#### kitti + vkitti + Neural Style Transfer mAP@0.5 result
+|occlusion amount|baseline|ours(NST)|
+|:--:|:--:|:--:|
+|0~5|0.379|ㅁㄴㅇㄹ|
+|0~10|0.358|ㅁㄴㅇㄹ|
+|0~all|0.342|ㅁㄴㅇㄹ|
+
+> 합성데이터에 환경정보를 추가한 데이터셋의 가려진 객체 탐지에 있어서 성능 향상이 있음을 확인할 수 있습니다.
+
+
+## reference 
+
+[1] [Structured Domain Randomization: Bridging the Reality Gap by
+Context-Aware Synthetic Data](https://arxiv.org/pdf/1810.10093.pdf)
+
+[2] [Photorealistic Style Transfer via Wavelet Transforms](https://openaccess.thecvf.com/content_ICCV_2019/papers/Yoo_Photorealistic_Style_Transfer_via_Wavelet_Transforms_ICCV_2019_paper.pdf) 
+
+[3] [Unpaired Image-to-Image Translation using Cycle-Consistent Adversarial Networks](https://arxiv.org/pdf/1703.10593.pdf)
+
+[4] [KITTI : Object Scene Flow for Autonomous Vehicles](http://www.cvlibs.net/publications/Menze2015CVPR.pdf)
+
+[5] [Virtual KITTI 2(Cabon, Yohann and Murray, Naila and Humenberger, Martin)](https://arxiv.org/pdf/2001.10773v1.pdf)
+
+[6] [BDD100K : A Diverse Driving Dataset for Heterogeneous Multitask Learning](https://arxiv.org/pdf/1805.04687.pdf)
+
+
+[7] https://github.com/sukkritsharmaofficial/NEURALFUSE
+
+[8] https://github.com/junyanz/pytorch-CycleGAN-and-pix2pix
+
+[9] https://github.com/ultralytics/yolov5
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## timestamp
 <details>
 <summary>5월 13일</summary>
 
@@ -455,54 +480,4 @@ python train.py  --img 1280 --batch 8 --epochs 300 --data '../datasets/vkitti2.0
 
 
 
----
-# validation result 
 
-## validation dataset
-- BDD100K의 train데이터셋 전부를 val dataset으로 사용하였습니다.
-- 가려진 객체(car,van,truck)의 개수가 '0-5', '0-10', '0-전체'인 데이터셋으로 분리하여 검증했습니다.
-- '0-5', '0-10', '0-전체'는 가려진 객체의 비율(1:1:1)로 나누어 결정하였습니다.
-
-![occluded instance amount in BDD100K train dataset](./imgs/occluded_instance_amount.png)
-
-
-## kitti + vkitti + cycleGAN mAP@0.5 result
-|occlusion amount|baseline|ours(cycleGAN)|
-|:--:|:--:|:--:|
-|0~5|0.379|**0.413**|
-|0~10|0.358|**0.387**|
-|0~all|0.342|**0.365**|
-
-
-
-## kitti + vkitti + Neural Style Transfer mAP@0.5 result
-|occlusion amount|baseline|ours(NST)|
-|:--:|:--:|:--:|
-|0~5|0.379|ㅁㄴㅇㄹ|
-|0~10|0.358|ㅁㄴㅇㄹ|
-|0~all|0.342|ㅁㄴㅇㄹ|
-
-> 합성데이터에 환경정보를 추가한 데이터셋의 가려진 객체 탐지에 있어서 성능 향상이 있음을 확인할 수 있습니다.
-
-
-# reference 
-
-[1] [Structured Domain Randomization: Bridging the Reality Gap by
-Context-Aware Synthetic Data](https://arxiv.org/pdf/1810.10093.pdf)
-
-[2] [Photorealistic Style Transfer via Wavelet Transforms](https://openaccess.thecvf.com/content_ICCV_2019/papers/Yoo_Photorealistic_Style_Transfer_via_Wavelet_Transforms_ICCV_2019_paper.pdf) 
-
-[3] [Unpaired Image-to-Image Translation using Cycle-Consistent Adversarial Networks](https://arxiv.org/pdf/1703.10593.pdf)
-
-[4] [KITTI : Object Scene Flow for Autonomous Vehicles](http://www.cvlibs.net/publications/Menze2015CVPR.pdf)
-
-[5] [Virtual KITTI 2(Cabon, Yohann and Murray, Naila and Humenberger, Martin)](https://arxiv.org/pdf/2001.10773v1.pdf)
-
-[6] [BDD100K : A Diverse Driving Dataset for Heterogeneous Multitask Learning](https://arxiv.org/pdf/1805.04687.pdf)
-
-
-[7] https://github.com/sukkritsharmaofficial/NEURALFUSE
-
-[8] https://github.com/junyanz/pytorch-CycleGAN-and-pix2pix
-
-[9] https://github.com/ultralytics/yolov5
