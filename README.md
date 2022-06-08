@@ -74,6 +74,7 @@
 - 사용 모델 : yolov5, cycleGAN, neural style transfer
 - 모델 평가 및 지표 : occluded dataset, mAP@0.5
 
+<br>
 
 ## Process
 
@@ -81,6 +82,8 @@
 ![image](https://user-images.githubusercontent.com/96898057/172413781-cee22cb5-6a19-458c-bc17-2351cc194cfa.png)
 - 대낮과 같은 일반적인 환경에서는 detecting 성능이 준수하지만, 자연 환경이 변하면 detecting 성능이 떨어짐
 - Photo Sythesis 팀은 다양한 환경에서도 detecting 성능을 높히는 방법 대해 연구하였으며, 제한된 데이터를 image augmentation을 통해 다양한 환경으로 증강 시킨 후 학습하여 성능 개선을 이룸
+
+<br>
 
 ### □ 원인 분석
 ```
@@ -120,6 +123,7 @@ yolov5모델에서 [Kitti+vkitti데이터셋](preparing_dataset/yolov5/vkitti_ki
 ```
 하지만 학습 데이터셋에 없는 다른 환경에 대해서는 성능이 저조함을 발견하고,
 다양한 환경에 대한 학습을 위해 데이터 증강 기법을 적용할 필요성을 느낌
+
 <br>
 
 ### □ 해결 방안 수립
@@ -334,7 +338,7 @@ yolov5모델에서 [Kitti+vkitti데이터셋](preparing_dataset/yolov5/vkitti_ki
 |0~10|0.358|ㅁㄴㅇㄹ|
 |0~all|0.342|ㅁㄴㅇㄹ|
 
-> 합성데이터에 환경정보를 추가한 데이터셋의 가려진 객체 탐지에 있어서 성능 향상이 있음을 확인할 수 있습니다.
+> 합성데이터에 환경정보를 추가한 데이터셋의 가려진 객체 탐지에 있어서 성능 향상을 확인할 수 있습니다.
 
 <br><br>
 
