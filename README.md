@@ -260,8 +260,7 @@ yolov5모델에서 Kitti+vkitti데이터셋으로 학습시킨 경우 가려진 
 - 가려진 객체(car,van,truck)의 개수가 '0-5', '0-10', '0-전체'인 데이터셋으로 분리하여 검증했습니다.
 - '0-5', '0-10', '0-전체'는 가려진 객체의 비율(1:1:1)로 나누어 결정하였습니다.
 
-![occluded instance amount in BDD100K train dataset](./imgs/occluded_instance_amount.png)
-
+<img src="./imgs/occluded_instance_amount.png" width="430" height="280">
 
 #### kitti + vkitti + cycleGAN mAP@0.5 result
 |occlusion amount|baseline|ours(cycleGAN)|
@@ -319,6 +318,7 @@ Context-Aware Synthetic Data](https://arxiv.org/pdf/1810.10093.pdf)
 
 
 
+<br>
 
 ## timestamp
 <details>
