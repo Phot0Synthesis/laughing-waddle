@@ -1,5 +1,5 @@
 
-# Synthetic Image translation 통한 Domain Adaption 
+# Domain Adaption using Synthetic Image translation
 
 
 ### **photo synthesis 팀 구성**
